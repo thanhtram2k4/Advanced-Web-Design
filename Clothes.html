@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .Section {
+            width: 50%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #total-row {
+            font-weight: bold;
+            background-color: #f4f4f9;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clothes</h1>
+    <hr>
+    <div class="Section">
+        <form id="frm">
+            <p>
+                <label>
+                    Product Name:
+                    <input type="text" name="pname" id="pname" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Product Quantity:
+                    <input type="number" name="qty" id="qty" min="1" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Product Price:
+                    <input type="number" name="pri" id="pri" min="1" required>
+                </label>
+            </p>
+            <p>
+                <button type="button" onclick="add()">Add</button>
+                <button type="reset">Cancel</button>
+            </p>
+        </form>
+
+        <div class="success-message" id="success-message">Product added successfully!</div>
+
+        <table id="tb">
+            <thead id="thead">
+                <tr>
+                    <th>No</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody id="tbody">
+                <tr id="total-row">
+                    <td>Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="total">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var id = 0;
+
+        function add() {
+            // Validate inputs
+            var pname = document.getElementById('pname').value;
+            var qty = document.getElementById('qty').value;
+            var price = document.getElementById('pri').value;
+            
+            if (pname === '' || qty <= 0 || price <= 0) {
+                alert("Please enter valid product details!");
+                return;
+            }
+
+            id++;
+
+            var sub = qty * price;
+
+            // Construct a new row with product details
+            var row = "<tr>";
+            row += "<td>" + id + "</td>";
+            row += "<td>" + pname + "</td>";
+            row += "<td>" + qty + "</td>";
+            row += "<td>" + price + "</td>";
+            row += "<td>" + sub + "</td>";
+            row += "</tr>";
+
+            // Append the new row to the table
+            document.getElementById('thead').innerHTML += row;
+
+            // Update the total value
+            var total = parseInt(document.getElementById('total').innerHTML) || 0;
+            total += sub; // Add the subtotal to the total
+
+            // Update the total row
+            document.getElementById('total').innerHTML = total;
+
+            // Show success message
+            var successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 2000);
+
+            // Reset the form for new input
+            document.getElementById('frm').reset();
+        }
+    </script>
+</body>
+</html>

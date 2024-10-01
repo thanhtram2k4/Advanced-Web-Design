@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #kq {
+            background-color: yellow;
+            color: red;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p id="kq">ket qua la</p>
+
+    <Script type="text/javascript">
+        var a = "Hello";
+        var b = "World!";
+        var c = a + " " + b;
+
+        //alert(c); 3 cách xuất kq của c
+        //document.write(c);
+        document.getElementById('kq').innerHTML=c;
+    </Script>
+</body>
+</html>

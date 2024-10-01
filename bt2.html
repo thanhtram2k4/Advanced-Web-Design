@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Product Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f4f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            background-color: #17a2b8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: #138496;
+        }
+
+        .pagination button.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Customer Product Form</h1>
+
+<form id="productForm">
+    <input type="text" id="fullname" name="fullname" placeholder="Enter Customer Fullname" required>
+    <input type="number" id="idpro" name="idpro" placeholder="Enter Product ID" required>
+    <input type="text" id="namepro" name="namepro" placeholder="Enter Product Name" required>
+    <input type="number" id="quantitypro" name="quantitypro" placeholder="Enter Quantity" required>
+    <input type="number" id="pricepro" name="pricepro" placeholder="Enter Price" required>
+
+    <button type="button" onclick="saveData()"><i class="fas fa-save"></i>Save</button>
+    <button type="button" onclick="showData()"><i class="fas fa-eye"></i>Show</button>
+    <button type="button" onclick="resetForm()"><i class="fas fa-undo"></i>Reset</button>
+</form>
+
+<div class="table-container">
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Auto_Increment</th>
+                <th>Fullname_Customer</th>
+                <th>Id_Pro</th>
+                <th>Name_Pro</th>
+                <th>Quantity_Pro</th>
+                <th>Price_Pro</th>
+                <th>Discount</th>
+                <th>Amount</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be dynamically inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <button class="disabled" id="prevBtn" onclick="prevPage()">Prev</button>
+    <button id="nextBtn" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    let counter = 1;
+    let data = [];
+    let currentPage = 1;
+    let rowsPerPage = 5;
+
+    function saveData() {
+        const fullname = document.getElementById('fullname').value;
+        const idpro = document.getElementById('idpro').value;
+        const namepro = document.getElementById('namepro').value;
+        const quantitypro = document.getElementById('quantitypro').value;
+        const pricepro = document.getElementById('pricepro').value;
+
+        const discount = pricepro * 0.1; // Example: 10% discount
+        const amount = pricepro * quantitypro;
+        const total = amount - discount;
+
+        const row = {
+            id: counter++,
+            fullname: fullname,
+            idpro: idpro,
+            namepro: namepro,
+            quantitypro: quantitypro,
+            pricepro: pricepro,
+            discount: discount.toFixed(1),
+            amount: amount.toFixed(1),
+            total: total.toFixed(1)
+        };
+
+        data.push(row);
+        resetForm();
+        showData();
+    }
+
+    function showData() {
+        const tableBody = document.querySelector("#dataTable tbody");
+        tableBody.innerHTML = ""; // Clear previous data
+
+        let start = (currentPage - 1) * rowsPerPage;
+        let end = start + rowsPerPage;
+        let paginatedData = data.slice(start, end);
+
+        paginatedData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.id}</td>
+                <td>${row.fullname}</td>
+                <td>${row.idpro}</td>
+                <td>${row.namepro}</td>
+                <td>${row.quantitypro}</td>
+                <td>${row.pricepro}</td>
+                <td>${row.discount}</td>
+                <td>${row.amount}</td>
+                <td>${row.total}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        updatePagination();
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(data.length / rowsPerPage);
+        document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 1);
+        document.getElementById('nextBtn').classList.toggle('disabled', currentPage === totalPages || totalPages === 0);
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showData();
+        }
+    }
+
+    function nextPage() {
+        const totalPages = Math.ceil(data.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showData();
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('productForm').reset();
+    }
+</script>
+
+</body>
+</html>
