@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop DEBUG - Fashion for Women</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header and Navigation */
+        .header {
+            background-color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: red;
+            font-size: 18px;
+        }
+
+        .nav a.active {
+            color: red;
+            font-weight: bold;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            color: #C52424;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .products {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 30%;
+            margin: 10px;
+            padding: 20px;
+            box-shadow: 2px 2px 12px #ccc;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-card .price {
+            color: red;
+            font-size: 16px;
+        }
+
+        .product-card .old-price {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .product-card button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <img src="logo.png" alt="Shop DEBUG">
+        </div>
+        <div class="nav">
+            <a href="#" class="active">Trang chủ</a>
+            <a href="#">Thời Trang Nam</a>
+            <a href="#">Thời Trang Nữ</a>
+            <a href="#">Tin Tức</a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm Kiếm...">
+            <button>Tìm Kiếm</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>THỜI TRANG NỮ</h2>
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="jeans.png" alt="Quần jean nữ">
+                <h3>Quần jean nữ - KO0002</h3>
+                <p><span class="price">269.000 VND</span> <span class="old-price">370.000 VND</span></p>
+                <button>Đặt Mua</button>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="jacket.png" alt="Áo khoác nữ">
+                <h3>Áo khoác nữ - VN0002</h3>
+                <p><span class="price">249.000 VND</span> <span class="old-price">369.000 VND</span></p>
+                <button>Đặt Mua</button>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="sweater.png" alt="Áo phông nữ">
+                <h3>Áo phông nữ - US0002</h3>
+                <p><span class="price">159.000 VND</span> <span class="old-price">390.000 VND</span></p>
+                <button>Đặt Mua</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
